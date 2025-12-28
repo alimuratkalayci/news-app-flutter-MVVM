@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/news_page/news_page.dart';
-import 'features/news_page/news_page_cubit.dart';
-import 'features/news_page/services/news_page_web_service.dart';
+import 'package:provider/provider.dart';
+import 'core/theme/app_theme.dart';
+import 'features/news/presentation/viewmodels/news_view_model.dart';
+import 'features/news/presentation/views/news_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,18 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => NewsCubit(NewsService()),
-        ),
-      ],
+    return ChangeNotifierProvider(
+      create: (_) => NewsViewModel(),
       child: MaterialApp(
-        title: 'Flutter Case',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+        title: 'News App',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
         home: const NewsPage(),
       ),
     );
