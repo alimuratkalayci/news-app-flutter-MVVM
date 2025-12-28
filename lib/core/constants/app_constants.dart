@@ -20,17 +20,17 @@ class AppConstants {
   
   // Categories
   static const List<String> categories = [
-    'Business',
-    'Entertainment',
-    'General',
-    'Health',
-    'Science',
-    'Sports',
-    'Technology'
+    'business',
+    'entertainment',
+    'general',
+    'health',
+    'science',
+    'sports',
+    'technology'
   ];
   
   // Default Values
   static const String defaultCountry = 'US';
-  static const String defaultCategory = 'Business';
+  static const String defaultCategory = 'business';
 }
 

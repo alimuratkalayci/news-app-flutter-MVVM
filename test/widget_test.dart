@@ -1,30 +1,49 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:provider/provider.dart';
 import 'package:news_app/main.dart';
+import 'package:news_app/features/news/presentation/viewmodels/news_view_model.dart';
+import 'package:news_app/features/news/data/repositories/news_repository.dart';
+import 'package:news_app/features/news/data/models/news_model.dart';
+
+// Mock Repository for main app test
+class MockNewsRepository extends NewsRepository {
+  @override
+  Future<NewsModel> getNews({
+    required String country,
+    required String category,
+  }) async {
+    return NewsModel(
+      status: 'ok',
+      totalResults: 0,
+      articles: [],
+    );
+  }
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App should start without errors', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the app starts
+    expect(find.byType(MaterialApp), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('App should display News page', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that News page is displayed
+    expect(find.text('News'), findsOneWidget);
+  });
+
+  testWidgets('App should have Provider setup', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that Provider is set up
+    final context = tester.element(find.byType(MaterialApp));
+    expect(Provider.of<NewsViewModel>(context, listen: false), isNotNull);
   });
 }
