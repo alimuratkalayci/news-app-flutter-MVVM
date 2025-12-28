@@ -5,6 +5,12 @@
 A modern news application built with Flutter, following a **Feature-Based MVVM architecture**.  
 The project is designed with scalability, maintainability, and clean code principles in mind.
 
+For security reasons, the API key is **not included in the client-side codebase**.  
+Embedding sensitive credentials directly in a mobile application is considered an insecure practice.
+In a production-ready setup, such operations should be handled on the backend layer,
+for example using services like **Firebase Cloud Functions**, where secrets can be stored
+and managed securely.
+
 ---
 
 ## 🚀 Features
